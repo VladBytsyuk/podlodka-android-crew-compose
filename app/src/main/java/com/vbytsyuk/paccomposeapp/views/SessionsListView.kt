@@ -15,7 +15,7 @@ fun SessionsListView(
     onSessionClick: (Session) -> Unit,
     onFavoriteClick: (Session, Boolean) -> Unit
 ) = Column {
-    Text("Sessions")
+    Text("Сессии")
     LazyColumn {
         sessions
             .groupBy { it.date }

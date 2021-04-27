@@ -12,7 +12,7 @@ import com.vbytsyuk.paccomposeapp.Session
 fun FavoritesListView(
     favorites: Set<Session>
 ) = Column {
-    Text("Favorites")
+    Text("Избранное")
     LazyRow {
         items(favorites.toList()) { session ->
             FavoriteSessionCard(session)
