@@ -16,8 +16,15 @@ fun SessionsListView(
 ) = Column {
     Text("Sessions")
     LazyColumn {
-        items(sessions) { session ->
-            SessionCard(session, isFavorite = session in favorites) { onFavoriteClick(session, it) }
-        }
+        sessions
+            .groupBy { it.date }
+            .forEach { (date, sessionsOnDate) ->
+                item { Text(date) }
+                items(sessionsOnDate) { session ->
+                    SessionCard(session, isFavorite = session in favorites) { isFavorite ->
+                        onFavoriteClick(session, isFavorite)
+                    }
+                }
+            }
     }
 }
