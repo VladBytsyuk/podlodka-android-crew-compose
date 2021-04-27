@@ -19,7 +19,7 @@ import com.vbytsyuk.paccomposeapp.Session
 
 
 @Composable
-fun DetailView(session: Session) = Column(
+fun DetailScreen(session: Session) = Column(
     modifier = Modifier.fillMaxSize()
 ) {
     Image(
@@ -71,4 +71,4 @@ fun DetailView(session: Session) = Column(
 @Preview(showBackground = true)
 @Composable
 fun RandomDetailView() =
-    DetailView(session = MockSessions.random())
+    DetailScreen(session = MockSessions.random())
