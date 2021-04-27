@@ -48,5 +48,5 @@ fun FavoriteSessionCard(session: Session) = Card(
 
 @Preview
 @Composable
-private fun  FavoriteSessionCard_common() =
+private fun RandomFavoriteSessionCard() =
     FavoriteSessionCard(MockSessions.random())

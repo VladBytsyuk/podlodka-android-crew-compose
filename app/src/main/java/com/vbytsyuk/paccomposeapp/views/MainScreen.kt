@@ -18,6 +18,9 @@ fun MainScreen(viewModel: MainViewModel) = Column {
     SessionsListView(
         sessions,
         favorites,
+        onSessionClick = {
+
+        },
         onFavoriteClick = { session, isFavorite ->
             if (isFavorite) viewModel.addToFavorites(session)
             else viewModel.removeFromFavorites(session)

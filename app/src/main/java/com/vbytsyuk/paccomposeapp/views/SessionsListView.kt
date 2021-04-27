@@ -12,6 +12,7 @@ import com.vbytsyuk.paccomposeapp.Session
 fun SessionsListView(
     sessions: List<Session>,
     favorites: Set<Session>,
+    onSessionClick: (Session) -> Unit,
     onFavoriteClick: (Session, Boolean) -> Unit
 ) = Column {
     Text("Sessions")
@@ -21,9 +22,14 @@ fun SessionsListView(
             .forEach { (date, sessionsOnDate) ->
                 item { Text(date) }
                 items(sessionsOnDate) { session ->
-                    SessionCard(session, isFavorite = session in favorites) { isFavorite ->
-                        onFavoriteClick(session, isFavorite)
-                    }
+                    SessionCard(
+                        session,
+                        isFavorite = session in favorites,
+                        onContentClick = { onSessionClick(session) },
+                        onFavoriteClick = { isFavorite ->
+                            onFavoriteClick(session, isFavorite)
+                        }
+                    )
                 }
             }
     }
