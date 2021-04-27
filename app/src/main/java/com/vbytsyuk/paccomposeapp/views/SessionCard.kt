@@ -2,6 +2,7 @@ package com.vbytsyuk.paccomposeapp.views
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -19,7 +20,11 @@ import com.vbytsyuk.paccomposeapp.Session
 
 
 @Composable
-fun SessionCard(session: Session) = Card(
+fun SessionCard(
+    session: Session,
+    isFavorite: Boolean,
+    onFavoriteClick: (Boolean) -> Unit
+) = Card(
     modifier = Modifier
         .padding(4.dp)
 ) {
@@ -44,14 +49,20 @@ fun SessionCard(session: Session) = Card(
             Text(session.timeInterval, fontWeight = FontWeight.Bold)
             Text(session.description)
         }
-        Image(
-            painter = painterResource(id = R.drawable.ic_star_filled),
-            contentDescription = session.speaker,
-            modifier = Modifier
-                .size(48.dp)
-                .padding(8.dp)
-                .align(Alignment.CenterVertically)
-        )
+        Button(
+            onClick = { onFavoriteClick(!isFavorite) }
+        ) {
+            Image(
+                painter = painterResource(
+                    id = if (isFavorite) R.drawable.ic_star_filled else R.drawable.ic_star_contoured
+                ),
+                contentDescription = session.speaker,
+                modifier = Modifier
+                    .size(48.dp)
+                    .padding(8.dp)
+                    .align(Alignment.CenterVertically)
+            )
+        }
     }
 }
 
@@ -59,4 +70,4 @@ fun SessionCard(session: Session) = Card(
 @Preview
 @Composable
 private fun SessionCard_common() =
-    SessionCard(MockSessions.random())
+    SessionCard(MockSessions.random(), isFavorite = true, onFavoriteClick = { })
