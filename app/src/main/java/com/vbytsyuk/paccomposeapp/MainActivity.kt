@@ -16,6 +16,6 @@ class MainActivity : AppCompatActivity() {
 
 @Preview
 @Composable
-private fun Content() {
+fun Content() {
     Text("Hello World!")
 }
