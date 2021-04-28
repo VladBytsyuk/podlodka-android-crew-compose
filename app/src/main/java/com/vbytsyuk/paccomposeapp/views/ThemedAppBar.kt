@@ -83,19 +83,27 @@ fun ThemedAppBar(
 
 @Preview
 @Composable
-private fun MainLight() = MaterialTheme(colors = Theme.Light.colors) {
-    ThemedAppBar(title = "Title", theme = Theme.Light, onThemeChange = { /* do nothing */ })
+private fun MainLight() = Theme.Light {
+    ThemedAppBar(
+        title = "Title",
+        theme = Theme.Light,
+        onThemeChange = { /* do nothing */ }
+    )
 }
 
 @Preview
 @Composable
-private fun MainDark() = MaterialTheme(colors = Theme.Dark.colors) {
-    ThemedAppBar(title = "Title", theme = Theme.Dark, onThemeChange = { /* do nothing */ })
+private fun MainDark() = Theme.Dark {
+    ThemedAppBar(
+        title = "Title",
+        theme = Theme.Dark,
+        onThemeChange = { /* do nothing */ }
+    )
 }
 
 @Preview
 @Composable
-private fun DetailsLight() = MaterialTheme(colors = Theme.Light.colors) {
+private fun DetailsLight() = Theme.Light {
     ThemedAppBar(
         title = "Title",
         theme = Theme.Light,
@@ -106,7 +114,7 @@ private fun DetailsLight() = MaterialTheme(colors = Theme.Light.colors) {
 
 @Preview
 @Composable
-private fun DetailsDark() = MaterialTheme(colors = Theme.Dark.colors) {
+private fun DetailsDark() = Theme.Dark {
     ThemedAppBar(
         title = "Title",
         theme = Theme.Dark,

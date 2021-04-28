@@ -9,11 +9,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.vbytsyuk.paccomposeapp.AppViewModel
-import com.vbytsyuk.paccomposeapp.Theme
 
 
 @Composable
@@ -21,6 +19,7 @@ fun MainScreen(
     viewModel: AppViewModel = viewModel(),
     onDetailsClick: (String) -> Unit
 ) = Box {
+    val theme by viewModel.theme.collectAsState()
     val sessions by viewModel.sessions.collectAsState()
     val favorites by viewModel.favorites.collectAsState()
     val snackBarState by viewModel.snackBarState.collectAsState()
@@ -28,14 +27,11 @@ fun MainScreen(
     Column {
         ThemedAppBar(
             title = "Podlodka Android Crew Сезон #4",
-            theme = viewModel.theme.value,
+            theme = theme,
             onThemeChange = { viewModel.changeTheme() }
         )
-
-        if (favorites.isNotEmpty()) {
-            FavoritesListView(favorites)
-        }
-        SessionsListView(
+        SessionsList(
+            theme,
             sessions,
             favorites,
             onSessionClick = { session -> onDetailsClick(session.id) },
@@ -54,18 +50,4 @@ fun MainScreen(
             Text(text = "Не удалось добавить сессию в избранное")
         }
     }
-}
-
-
-
-@Preview(showBackground = true)
-@Composable
-private fun MainLight() = MaterialTheme(colors = Theme.Light.colors) {
-    MainScreen(onDetailsClick = { /* do nothing */ })
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun MainDark() = MaterialTheme(colors = Theme.Dark.colors) {
-    MainScreen(onDetailsClick = { /* do nothing */ })
 }
