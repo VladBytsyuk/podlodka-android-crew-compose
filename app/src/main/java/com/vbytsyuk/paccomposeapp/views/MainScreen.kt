@@ -30,7 +30,7 @@ fun MainScreen(viewModel: MainViewModel, navController: NavController) = Box {
             sessions,
             favorites,
             onSessionClick = { session ->
-                navController.navigate(NavigationRoutes.sessionDetails(session))
+                navController.navigate(NavigationRoutes.sessionDetails(session.id))
             },
             onFavoriteClick = { session, isFavorite ->
                 if (isFavorite) viewModel.addToFavorites(session)
