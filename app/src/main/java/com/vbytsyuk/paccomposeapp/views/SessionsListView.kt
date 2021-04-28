@@ -14,23 +14,19 @@ fun SessionsListView(
     favorites: Set<Session>,
     onSessionClick: (Session) -> Unit,
     onFavoriteClick: (Session, Boolean) -> Unit
-) = Column {
-    Text("Сессии")
-    LazyColumn {
-        sessions
-            .groupBy { it.date }
-            .forEach { (date, sessionsOnDate) ->
-                item { Text(date) }
-                items(sessionsOnDate) { session ->
-                    SessionCard(
-                        session,
-                        isFavorite = session in favorites,
-                        onContentClick = { onSessionClick(session) },
-                        onFavoriteClick = { isFavorite ->
-                            onFavoriteClick(session, isFavorite)
-                        }
-                    )
-                }
+) = LazyColumn {
+    item { Text("Сессии") }
+    sessions
+        .groupBy { it.date }
+        .forEach { (date, sessionsOnDate) ->
+            item { Text(date) }
+            items(sessionsOnDate) { session ->
+                SessionCard(
+                    session,
+                    isFavorite = session in favorites,
+                    onContentClick = { onSessionClick(session) },
+                    onFavoriteClick = { isFavorite -> onFavoriteClick(session, isFavorite) }
+                )
             }
-    }
+        }
 }

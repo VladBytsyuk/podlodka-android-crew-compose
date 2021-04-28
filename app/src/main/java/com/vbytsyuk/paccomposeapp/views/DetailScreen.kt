@@ -2,6 +2,7 @@ package com.vbytsyuk.paccomposeapp.views
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -11,17 +12,28 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.transform.CircleCropTransformation
 import com.google.accompanist.coil.rememberCoilPainter
-import com.vbytsyuk.paccomposeapp.MockSessions
+import com.vbytsyuk.paccomposeapp.*
 import com.vbytsyuk.paccomposeapp.R
-import com.vbytsyuk.paccomposeapp.Session
 
 
 @Composable
-fun DetailScreen(session: Session) = Column(
+fun DetailScreen(
+    viewModel: AppViewModel = viewModel(),
+    session: Session,
+    onBackClick: () -> Unit
+) = Column(
     modifier = Modifier.fillMaxSize()
 ) {
+    ThemedAppBar(
+        title = "Podlodka Android Crew Сезон #4",
+        theme = viewModel.theme.value,
+        onBackClick = onBackClick,
+        onThemeChange = { viewModel.changeTheme() }
+    )
+
     Image(
         painter = rememberCoilPainter(
             request = session.imageUrl,
@@ -70,5 +82,19 @@ fun DetailScreen(session: Session) = Column(
 
 @Preview(showBackground = true)
 @Composable
-fun RandomDetailView() =
-    DetailScreen(session = MockSessions.random())
+private fun DetailLight() = MaterialTheme(colors = Theme.Light.colors) {
+    DetailScreen(
+        session = MockSessions.random(),
+        onBackClick = { /* do nothing */ }
+    )
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun DetailDark() = MaterialTheme(colors = Theme.Dark.colors) {
+    DetailScreen(
+        session = MockSessions.random(),
+        onBackClick = { /* do nothing */ }
+    )
+}
+
