@@ -24,7 +24,7 @@ import com.vbytsyuk.paccomposeapp.R
 
 @Composable
 fun DetailScreen(
-    viewModel: AppViewModel = viewModel(), 
+    viewModel: AppViewModel = viewModel(),
     session: Session,
     onBackClick: () -> Unit
 ) = Column (

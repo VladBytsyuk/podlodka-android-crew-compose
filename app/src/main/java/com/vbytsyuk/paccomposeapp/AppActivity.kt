@@ -13,7 +13,9 @@ class AppActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val viewModel = ViewModelProvider(this).get(AppViewModel::class.java)
-        viewModel.setTheme(if (isDarkThemeOn()) Theme.Dark else Theme.Light)
+        if (savedInstanceState == null) {
+            viewModel.setTheme(if (isDarkThemeOn()) Theme.Dark else Theme.Light)
+        }
         setContent { NavigationHost(navHostController = rememberNavController()) }
     }
 
