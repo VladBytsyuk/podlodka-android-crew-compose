@@ -1,7 +1,6 @@
 package com.vbytsyuk.paccomposeapp.views
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.getValue
@@ -9,8 +8,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -27,18 +24,17 @@ fun DetailScreen(
     viewModel: AppViewModel = viewModel(),
     session: Session,
     onBackClick: () -> Unit
-) = Column (
+) = Column(
     modifier = Modifier.fillMaxSize()
 ) {
     val theme by viewModel.theme.collectAsState()
 
     ThemedAppBar(
-        title = "Podlodka Android Crew Сезон #4",
+        title = Texts.Title.APP,
         theme = theme,
         onBackClick = onBackClick,
         onThemeChange = { viewModel.changeTheme() }
     )
-
     BoxWithConstraints(
         modifier = Modifier
             .fillMaxHeight()
@@ -51,24 +47,37 @@ fun DetailScreen(
 
 @Composable
 private fun DetailsScreenTablet(session: Session, theme: Theme) = Row {
-    Avatar(session, modifier = Modifier
-        .align(Alignment.CenterVertically)
-        .padding(start = 32.dp))
-    InfoTexts(session, theme, modifier = Modifier
-        .align(Alignment.CenterVertically)
-        .padding(horizontal = 32.dp))
+    Avatar(
+        session,
+        modifier = Modifier
+            .align(Alignment.CenterVertically)
+            .padding(start = 32.dp)
+    )
+    InfoTexts(
+        session,
+        theme,
+        modifier = Modifier
+            .align(Alignment.CenterVertically)
+            .padding(horizontal = 32.dp)
+    )
 }
 
 @Composable
 private fun DetailsScreenPhone(session: Session, theme: Theme) = Column {
-    Avatar(session, modifier = Modifier
-        .align(Alignment.CenterHorizontally)
-        .padding(top = 128.dp))
-    InfoTexts(session, theme, modifier = Modifier
-        .align(Alignment.CenterHorizontally)
-        .padding(bottom = 128.dp))
+    Avatar(
+        session,
+        modifier = Modifier
+            .align(Alignment.CenterHorizontally)
+            .padding(top = 128.dp)
+    )
+    InfoTexts(
+        session,
+        theme,
+        modifier = Modifier
+            .align(Alignment.CenterHorizontally)
+            .padding(bottom = 128.dp)
+    )
 }
-
 
 
 @Composable
@@ -78,7 +87,7 @@ private fun Avatar(session: Session, modifier: Modifier) = Image(
         requestBuilder = { transformations(CircleCropTransformation()) },
         previewPlaceholder = R.drawable.ic_person_placeholder,
     ),
-    contentDescription = session.speaker,
+    contentDescription = Texts.ContentDescription.speakerAvatar(session.speaker),
     modifier = modifier
         .size(256.dp)
         .padding(8.dp)
@@ -102,7 +111,7 @@ private fun InfoTexts(session: Session, theme: Theme, modifier: Modifier) = Colu
         Spacer(modifier = Modifier.width(16.dp))
         Image(
             painter = painterResource(id = R.drawable.ic_calendar),
-            contentDescription = session.speaker,
+            contentDescription = Texts.ContentDescription.SESSION_DATE_TIME,
             modifier = Modifier
                 .size(16.dp)
                 .align(Alignment.CenterVertically)

@@ -21,10 +21,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.transform.CircleCropTransformation
 import com.google.accompanist.coil.rememberCoilPainter
-import com.vbytsyuk.paccomposeapp.MockSessions
+import com.vbytsyuk.paccomposeapp.*
 import com.vbytsyuk.paccomposeapp.R
-import com.vbytsyuk.paccomposeapp.Session
-import com.vbytsyuk.paccomposeapp.Theme
 
 
 @Composable
@@ -47,15 +45,14 @@ fun SessionCard(
                 requestBuilder = { transformations(CircleCropTransformation()) },
                 previewPlaceholder = R.drawable.ic_person_placeholder,
             ),
-            contentDescription = session.speaker,
+            contentDescription = Texts.ContentDescription.speakerAvatar(session.speaker),
             modifier = Modifier
                 .size(64.dp)
                 .padding(8.dp)
                 .align(Alignment.CenterVertically)
         )
         Column(
-            modifier = Modifier
-                .weight(10f)
+            modifier = Modifier.weight(10f)
         ) {
             Text(
                 text = session.speaker,
@@ -91,11 +88,13 @@ fun SessionCard(
                 }
         ) {
             Crossfade(targetState = isFavorite) { isFavorite ->
+                val (iconId, contentDescription) = when {
+                    isFavorite -> R.drawable.ic_star_filled to Texts.ContentDescription.FAVORITE_ON
+                    else -> R.drawable.ic_star_contoured to Texts.ContentDescription.FAVORITE_OFF
+                }
                 Image(
-                    painter = painterResource(
-                        id = if (isFavorite) R.drawable.ic_star_filled else R.drawable.ic_star_contoured
-                    ),
-                    contentDescription = session.speaker,
+                    painter = painterResource(id = iconId),
+                    contentDescription = contentDescription,
                     modifier = Modifier
                         .scale(favoriteScale.value)
                         .size(48.dp)

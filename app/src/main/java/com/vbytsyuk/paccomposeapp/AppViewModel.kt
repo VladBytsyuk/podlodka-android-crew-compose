@@ -2,7 +2,6 @@ package com.vbytsyuk.paccomposeapp
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,15 +17,15 @@ class AppViewModel : ViewModel() {
     private val _favorites = MutableStateFlow<Set<Session>>(emptySet())
     val favorites: StateFlow<Set<Session>> get() = _favorites
 
-    private val _snackBarState = MutableStateFlow(false)
-    val snackBarState: StateFlow<Boolean> get() = _snackBarState
+    private val _snackBarActive = MutableStateFlow(false)
+    val snackBarActive: StateFlow<Boolean> get() = _snackBarActive
 
     fun addToFavorites(session: Session) {
         viewModelScope.launch {
-            if (_favorites.value.size >= 3) {
-                _snackBarState.emit(true)
-                delay(3000)
-                _snackBarState.emit(false)
+            if (favorites.value.size >= 3) {
+                _snackBarActive.emit(true)
+                delay(SNACK_BAR_LIFETIME_MS)
+                _snackBarActive.emit(false)
             } else {
                 _favorites.emit(favorites.value + session)
             }
@@ -41,12 +40,7 @@ class AppViewModel : ViewModel() {
 
     fun changeTheme() {
         viewModelScope.launch {
-            _theme.emit(
-                when (theme.value) {
-                    Theme.Light -> Theme.Dark
-                    Theme.Dark -> Theme.Light
-                }
-            )
+            _theme.emit(theme.value.swap())
         }
     }
 
@@ -54,5 +48,9 @@ class AppViewModel : ViewModel() {
         viewModelScope.launch {
             _theme.emit(theme)
         }
+    }
+
+    companion object {
+        private const val SNACK_BAR_LIFETIME_MS = 1_500L
     }
 }

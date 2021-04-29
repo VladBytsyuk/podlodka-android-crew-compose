@@ -12,6 +12,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.vbytsyuk.paccomposeapp.MockSessions
 import com.vbytsyuk.paccomposeapp.Session
+import com.vbytsyuk.paccomposeapp.Texts
 import com.vbytsyuk.paccomposeapp.Theme
 
 
@@ -25,13 +26,13 @@ fun SessionsList(
     onFavoriteClick: (Session, Boolean) -> Unit
 ) = LazyColumn {
     item {
-        AnimatedVisibility(favorites.isNotEmpty()) {
+        AnimatedVisibility(visible = favorites.isNotEmpty()) {
             FavoritesList(theme, favorites, onSessionClick)
         }
     }
     item {
         Text(
-            text = "Сессии",
+            text = Texts.Title.SESSIONS,
             color = theme.colors.onBackground,
             style = Theme.typography().h6,
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
@@ -61,9 +62,9 @@ fun SessionsList(
 }
 
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, backgroundColor = 0xF5F5F5, widthDp = 360, heightDp = 720)
 @Composable
-private fun SessionsListLight() = Theme.Light {
+private fun SessionsListPhoneLight() = Theme.Light {
     SessionsList(
         theme = Theme.Light,
         sessions = MockSessions,
@@ -73,9 +74,33 @@ private fun SessionsListLight() = Theme.Light {
     )
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, backgroundColor = 0x333333, widthDp = 360, heightDp = 720)
 @Composable
-private fun SessionsListDark() = Theme.Dark {
+private fun SessionsListPhoneDark() = Theme.Dark {
+    SessionsList(
+        theme = Theme.Dark,
+        sessions = MockSessions,
+        favorites = MockSessions.subList(0, 3).toSet(),
+        onSessionClick = { /* do nothing */ },
+        onFavoriteClick = { _, _ -> /* do nothing */ },
+    )
+}
+
+@Preview(showBackground = true, backgroundColor = 0xF5F5F5, widthDp = 1024, heightDp = 720)
+@Composable
+private fun SessionsListTabletLight() = Theme.Light {
+    SessionsList(
+        theme = Theme.Light,
+        sessions = MockSessions,
+        favorites = MockSessions.subList(0, 3).toSet(),
+        onSessionClick = { /* do nothing */ },
+        onFavoriteClick = { _, _ -> /* do nothing */ },
+    )
+}
+
+@Preview(showBackground = true, backgroundColor = 0x333333, widthDp = 1024, heightDp = 720)
+@Composable
+private fun SessionsListTabletDark() = Theme.Dark {
     SessionsList(
         theme = Theme.Dark,
         sessions = MockSessions,

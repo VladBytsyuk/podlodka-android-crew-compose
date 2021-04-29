@@ -18,6 +18,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.vbytsyuk.paccomposeapp.R
+import com.vbytsyuk.paccomposeapp.Texts
 import com.vbytsyuk.paccomposeapp.Theme
 
 
@@ -43,7 +44,7 @@ fun ThemedAppBar(
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_back),
-                contentDescription = "Back",
+                contentDescription = Texts.ContentDescription.BACK,
                 modifier = Modifier.padding(16.dp)
             )
         }
@@ -67,14 +68,13 @@ fun ThemedAppBar(
             )
     ) {
         Crossfade(targetState = theme) { theme ->
+            val (iconId, contentDescription) = when (theme) {
+                Theme.Light -> R.drawable.ic_night to Texts.ContentDescription.THEME_DAY
+                Theme.Dark -> R.drawable.ic_day to Texts.ContentDescription.THEME_NIGHT
+            }
             Icon(
-                painter = painterResource(
-                    id = when (theme) {
-                        Theme.Light -> R.drawable.ic_night
-                        Theme.Dark -> R.drawable.ic_day
-                    }
-                ),
-                contentDescription = "Change theme",
+                painter = painterResource(id = iconId),
+                contentDescription = contentDescription,
                 modifier = Modifier.padding(16.dp)
             )
         }

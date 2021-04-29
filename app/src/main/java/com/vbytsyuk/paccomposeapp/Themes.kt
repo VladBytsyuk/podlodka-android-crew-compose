@@ -15,6 +15,10 @@ enum class Theme(
     Light(colors = lightColors(background = Color(0xFFF5F5F5))),
     Dark(colors = darkColors());
 
+    fun swap() = when (this) {
+        Light -> Dark
+        Dark -> Light
+    }
 
     @SuppressLint("ComposableNaming")
     @Composable
