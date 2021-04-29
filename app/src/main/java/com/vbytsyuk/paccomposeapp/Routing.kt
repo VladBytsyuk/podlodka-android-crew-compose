@@ -4,6 +4,7 @@ import androidx.compose.animation.*
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -27,7 +28,9 @@ fun NavigationHost(
 
     theme {
         Box(
-            modifier = Modifier.background(theme.colors.background)
+            modifier = Modifier
+                .fillMaxSize()
+                .background(theme.colors.background)
         ) {
             NavHost(navHostController, startDestination = "main") {
                 enterRoute(route = Routes.MAIN) {
@@ -41,12 +44,16 @@ fun NavigationHost(
                 }
 
                 enterRoute(route = Routes.SESSION_DETAILS) { backStackEntry ->
-                    val sessions = viewModel.sessions.value
+                    val sessions by viewModel.sessions.collectAsState(initial = emptyList())
                     val sessionId = backStackEntry.arguments?.getString(Routes.SESSION_ID)
+                    val session =
+                        if (sessions.isNotEmpty()) sessions.find { it.id == sessionId }
+                        else null
+                    session ?: return@enterRoute
 
                     DetailScreen(
                         viewModel,
-                        session = sessions.find { it.id == sessionId } ?: sessions.random(),
+                        session = session,
                         onBackClick = { navHostController.popBackStack() }
                     )
                 }

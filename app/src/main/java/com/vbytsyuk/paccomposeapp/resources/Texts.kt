@@ -12,6 +12,11 @@ object Texts {
         const val EXIT_MESSAGE = "Вы уверены, что хотите выйти из приложения?"
     }
 
+    object Hint {
+        const val SEARCH = "Поиск"
+        const val EMPTY_SESSIONS_LIST = "Нет подходящих сессий"
+    }
+
     object Action {
         const val YES = "Да"
         const val CANCEL = "Отмена"
@@ -30,6 +35,8 @@ object Texts {
         const val THEME_DAY = "Сменить тему на тёмную"
         const val THEME_NIGHT = "Сменить тему на светлую"
         const val SESSION_DATE_TIME = "Дата и время сессии"
+        const val SEARCH = "Поиск"
+        const val EMPTY_SESSIONS_LIST = "Нет подходящих сессий"
 
         fun speakerAvatar(speaker: String) = "Аватар: $speaker"
     }

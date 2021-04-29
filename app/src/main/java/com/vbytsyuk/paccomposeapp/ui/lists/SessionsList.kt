@@ -2,17 +2,20 @@ package com.vbytsyuk.paccomposeapp.ui.lists
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.transform.CircleCropTransformation
+import com.google.accompanist.coil.rememberCoilPainter
+import com.vbytsyuk.paccomposeapp.R
 import com.vbytsyuk.paccomposeapp.domain.MockSessions
 import com.vbytsyuk.paccomposeapp.domain.Session
 import com.vbytsyuk.paccomposeapp.resources.Texts
@@ -42,9 +45,9 @@ fun SessionsList(
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
         )
     }
-    sessions
-        .groupBy { it.date }
-        .forEach { (date, sessionsOnDate) ->
+    val sessionGroups = sessions.groupBy { it.date }
+    if (sessionGroups.isNotEmpty()) {
+        sessionGroups.forEach { (date, sessionsOnDate) ->
             item {
                 Text(
                     text = date,
@@ -63,6 +66,33 @@ fun SessionsList(
                 )
             }
         }
+    } else {
+        item { Spacer(modifier = Modifier.height(64.dp)) }
+        item {
+            Image(
+                painter = rememberCoilPainter(
+                    request = "https://i1.sndcdn.com/avatars-000331499231-lm24fw-t500x500.jpg",
+                    requestBuilder = { transformations(CircleCropTransformation()) },
+                    previewPlaceholder = R.drawable.ic_person_placeholder,
+                ),
+                contentDescription = Texts.ContentDescription.EMPTY_SESSIONS_LIST,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(192.dp)
+            )
+        }
+        item {
+            Text(
+                text = Texts.Hint.EMPTY_SESSIONS_LIST,
+                style = Theme.typography().h5,
+                color = theme.colors.onBackground,
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            )
+        }
+    }
     item { Spacer(modifier = Modifier.height(88.dp)) }
 }
 
@@ -109,6 +139,54 @@ private fun SessionsListTabletDark() = Theme.Dark {
     SessionsList(
         theme = Theme.Dark,
         sessions = MockSessions,
+        favorites = MockSessions.subList(0, 3).toSet(),
+        onSessionClick = { /* do nothing */ },
+        onFavoriteClick = { _, _ -> /* do nothing */ },
+    )
+}
+
+
+@Preview(showBackground = true, backgroundColor = 0xF5F5F5, widthDp = 360, heightDp = 720)
+@Composable
+private fun SessionsEmptyPhoneLight() = Theme.Light {
+    SessionsList(
+        theme = Theme.Light,
+        sessions = emptyList(),
+        favorites = MockSessions.subList(0, 3).toSet(),
+        onSessionClick = { /* do nothing */ },
+        onFavoriteClick = { _, _ -> /* do nothing */ },
+    )
+}
+@Preview(showBackground = true, backgroundColor = 0x333333, widthDp = 360, heightDp = 720)
+@Composable
+private fun SessionsEmptyPhoneDark() = Theme.Dark {
+    SessionsList(
+        theme = Theme.Dark,
+        sessions = emptyList(),
+        favorites = MockSessions.subList(0, 3).toSet(),
+        onSessionClick = { /* do nothing */ },
+        onFavoriteClick = { _, _ -> /* do nothing */ },
+    )
+}
+
+@Preview(showBackground = true, backgroundColor = 0xF5F5F5, widthDp = 1024, heightDp = 720)
+@Composable
+private fun SessionsEmptyTabletLight() = Theme.Light {
+    SessionsList(
+        theme = Theme.Light,
+        sessions = emptyList(),
+        favorites = MockSessions.subList(0, 3).toSet(),
+        onSessionClick = { /* do nothing */ },
+        onFavoriteClick = { _, _ -> /* do nothing */ },
+    )
+}
+
+@Preview(showBackground = true, backgroundColor = 0x333333, widthDp = 1024, heightDp = 720)
+@Composable
+private fun SessionsEmptyTabletDark() = Theme.Dark {
+    SessionsList(
+        theme = Theme.Dark,
+        sessions = emptyList(),
         favorites = MockSessions.subList(0, 3).toSet(),
         onSessionClick = { /* do nothing */ },
         onFavoriteClick = { _, _ -> /* do nothing */ },

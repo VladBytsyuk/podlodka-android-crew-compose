@@ -6,8 +6,7 @@ import com.vbytsyuk.paccomposeapp.domain.MockSessions
 import com.vbytsyuk.paccomposeapp.domain.Session
 import com.vbytsyuk.paccomposeapp.resources.Theme
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 
@@ -15,10 +14,16 @@ class AppViewModel : ViewModel() {
     private val _theme = MutableStateFlow(Theme.Light)
     val theme: StateFlow<Theme> = _theme
 
-    val sessions: StateFlow<List<Session>> = MutableStateFlow(MockSessions)
+    private val _sessions = MutableStateFlow(MockSessions)
+    val sessions: StateFlow<List<Session>> get() = _sessions
+    val filteredSessions: Flow<List<Session>>
+        get() = _sessions.map { sessions -> sessions.filter(::satisfiesSearchText) }
 
     private val _favorites = MutableStateFlow<Set<Session>>(emptySet())
     val favorites: StateFlow<Set<Session>> get() = _favorites
+
+    private val _searchText = MutableStateFlow("")
+    val searchText: StateFlow<String> get() = _searchText
 
     private val _snackBarActive = MutableStateFlow(false)
     val snackBarActive: StateFlow<Boolean> get() = _snackBarActive
@@ -41,6 +46,12 @@ class AppViewModel : ViewModel() {
         }
     }
 
+    fun updateSearchText(newSearchText: String) {
+        viewModelScope.launch {
+            _searchText.emit(newSearchText)
+        }
+    }
+
     fun changeTheme() {
         viewModelScope.launch {
             _theme.emit(theme.value.swap())
@@ -51,6 +62,13 @@ class AppViewModel : ViewModel() {
         viewModelScope.launch {
             _theme.emit(theme)
         }
+    }
+
+    private fun satisfiesSearchText(session: Session): Boolean {
+        val filterText = searchText.value
+        return filterText.isBlank() ||
+                session.speaker.contains(filterText, ignoreCase = true) ||
+                session.description.contains(filterText, ignoreCase = true)
     }
 
     companion object {
