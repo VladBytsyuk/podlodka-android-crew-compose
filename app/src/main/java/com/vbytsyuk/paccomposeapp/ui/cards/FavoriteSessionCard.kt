@@ -1,4 +1,4 @@
-package com.vbytsyuk.paccomposeapp.views
+package com.vbytsyuk.paccomposeapp.ui.cards
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -11,9 +11,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.vbytsyuk.paccomposeapp.MockSessions
-import com.vbytsyuk.paccomposeapp.Session
-import com.vbytsyuk.paccomposeapp.Theme
+import com.vbytsyuk.paccomposeapp.domain.MockSessions
+import com.vbytsyuk.paccomposeapp.domain.Session
+import com.vbytsyuk.paccomposeapp.resources.Theme
 
 
 @Composable

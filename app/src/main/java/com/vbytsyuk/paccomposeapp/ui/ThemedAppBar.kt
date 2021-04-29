@@ -1,4 +1,4 @@
-package com.vbytsyuk.paccomposeapp.views
+package com.vbytsyuk.paccomposeapp.ui
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.clickable
@@ -18,8 +18,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.vbytsyuk.paccomposeapp.R
-import com.vbytsyuk.paccomposeapp.Texts
-import com.vbytsyuk.paccomposeapp.Theme
+import com.vbytsyuk.paccomposeapp.resources.Texts
+import com.vbytsyuk.paccomposeapp.resources.Theme
 
 
 @Composable
@@ -69,8 +69,8 @@ fun ThemedAppBar(
     ) {
         Crossfade(targetState = theme) { theme ->
             val (iconId, contentDescription) = when (theme) {
-                Theme.Light -> R.drawable.ic_night to Texts.ContentDescription.THEME_DAY
-                Theme.Dark -> R.drawable.ic_day to Texts.ContentDescription.THEME_NIGHT
+                Theme.Light -> R.drawable.ic_day to Texts.ContentDescription.THEME_DAY
+                Theme.Dark -> R.drawable.ic_night to Texts.ContentDescription.THEME_NIGHT
             }
             Icon(
                 painter = painterResource(id = iconId),

@@ -1,4 +1,4 @@
-package com.vbytsyuk.paccomposeapp.views
+package com.vbytsyuk.paccomposeapp.ui.cards
 
 import android.view.MotionEvent
 import androidx.compose.animation.Crossfade
@@ -21,8 +21,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.transform.CircleCropTransformation
 import com.google.accompanist.coil.rememberCoilPainter
-import com.vbytsyuk.paccomposeapp.*
 import com.vbytsyuk.paccomposeapp.R
+import com.vbytsyuk.paccomposeapp.domain.MockSessions
+import com.vbytsyuk.paccomposeapp.domain.Session
+import com.vbytsyuk.paccomposeapp.resources.Texts
+import com.vbytsyuk.paccomposeapp.resources.Theme
 
 
 @Composable

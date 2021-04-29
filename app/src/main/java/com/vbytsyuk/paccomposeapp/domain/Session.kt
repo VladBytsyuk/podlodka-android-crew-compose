@@ -1,4 +1,4 @@
-package com.vbytsyuk.paccomposeapp
+package com.vbytsyuk.paccomposeapp.domain
 
 
 data class Session(

@@ -13,8 +13,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigate
-import com.vbytsyuk.paccomposeapp.views.DetailScreen
-import com.vbytsyuk.paccomposeapp.views.MainScreen
+import com.vbytsyuk.paccomposeapp.ui.screens.DetailScreen
+import com.vbytsyuk.paccomposeapp.ui.screens.MainScreen
 
 
 @Composable
@@ -45,9 +45,7 @@ fun NavigationHost(
                     DetailScreen(
                         viewModel,
                         session = sessions.find { it.id == sessionId } ?: sessions.random(),
-                        onBackClick = {
-                            navHostController.popBackStack()
-                        }
+                        onBackClick = { navHostController.popBackStack() }
                     )
                 }
             }

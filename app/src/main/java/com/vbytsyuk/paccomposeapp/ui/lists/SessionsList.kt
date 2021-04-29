@@ -1,8 +1,11 @@
-package com.vbytsyuk.paccomposeapp.views
+package com.vbytsyuk.paccomposeapp.ui.lists
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Text
@@ -10,10 +13,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.vbytsyuk.paccomposeapp.MockSessions
-import com.vbytsyuk.paccomposeapp.Session
-import com.vbytsyuk.paccomposeapp.Texts
-import com.vbytsyuk.paccomposeapp.Theme
+import com.vbytsyuk.paccomposeapp.domain.MockSessions
+import com.vbytsyuk.paccomposeapp.domain.Session
+import com.vbytsyuk.paccomposeapp.resources.Texts
+import com.vbytsyuk.paccomposeapp.resources.Theme
+import com.vbytsyuk.paccomposeapp.ui.cards.SessionCard
 
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -59,6 +63,7 @@ fun SessionsList(
                 )
             }
         }
+    item { Spacer(modifier = Modifier.height(88.dp)) }
 }
 
 

@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.compose.rememberNavController
+import com.vbytsyuk.paccomposeapp.resources.Theme
 
 
 class AppActivity : AppCompatActivity() {

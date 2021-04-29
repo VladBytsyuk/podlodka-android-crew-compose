@@ -1,4 +1,4 @@
-package com.vbytsyuk.paccomposeapp
+package com.vbytsyuk.paccomposeapp.resources
 
 import android.annotation.SuppressLint
 import androidx.compose.material.Colors

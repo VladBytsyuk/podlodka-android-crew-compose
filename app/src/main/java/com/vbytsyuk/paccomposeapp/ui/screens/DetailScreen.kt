@@ -1,4 +1,4 @@
-package com.vbytsyuk.paccomposeapp.views
+package com.vbytsyuk.paccomposeapp.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -17,6 +17,11 @@ import coil.transform.CircleCropTransformation
 import com.google.accompanist.coil.rememberCoilPainter
 import com.vbytsyuk.paccomposeapp.*
 import com.vbytsyuk.paccomposeapp.R
+import com.vbytsyuk.paccomposeapp.domain.MockSessions
+import com.vbytsyuk.paccomposeapp.domain.Session
+import com.vbytsyuk.paccomposeapp.resources.Texts
+import com.vbytsyuk.paccomposeapp.resources.Theme
+import com.vbytsyuk.paccomposeapp.ui.ThemedAppBar
 
 
 @Composable

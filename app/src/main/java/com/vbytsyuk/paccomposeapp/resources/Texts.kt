@@ -1,4 +1,4 @@
-package com.vbytsyuk.paccomposeapp
+package com.vbytsyuk.paccomposeapp.resources
 
 object Texts {
     object Title {

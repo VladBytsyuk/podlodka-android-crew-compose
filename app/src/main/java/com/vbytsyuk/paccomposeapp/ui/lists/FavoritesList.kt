@@ -1,4 +1,4 @@
-package com.vbytsyuk.paccomposeapp.views
+package com.vbytsyuk.paccomposeapp.ui.lists
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
@@ -7,10 +7,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.vbytsyuk.paccomposeapp.MockSessions
-import com.vbytsyuk.paccomposeapp.Session
-import com.vbytsyuk.paccomposeapp.Texts
-import com.vbytsyuk.paccomposeapp.Theme
+import com.vbytsyuk.paccomposeapp.domain.MockSessions
+import com.vbytsyuk.paccomposeapp.domain.Session
+import com.vbytsyuk.paccomposeapp.resources.Texts
+import com.vbytsyuk.paccomposeapp.resources.Theme
+import com.vbytsyuk.paccomposeapp.ui.cards.FavoriteSessionCard
 
 
 @Composable
