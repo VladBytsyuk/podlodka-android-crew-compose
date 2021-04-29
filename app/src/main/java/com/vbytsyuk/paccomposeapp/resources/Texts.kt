@@ -8,6 +8,15 @@ object Texts {
         const val SESSIONS = "Сессии"
     }
 
+    object Dialog {
+        const val EXIT_MESSAGE = "Вы уверены, что хотите выйти из приложения?"
+    }
+
+    object Action {
+        const val YES = "Да"
+        const val CANCEL = "Отмена"
+    }
+
     object Error {
         object SnackBar {
             const val FAVORITES_OVERFLOW = "Не удалось добавить сессию в избранное"

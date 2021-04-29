@@ -15,6 +15,11 @@ class AppActivity : AppCompatActivity() {
             val viewModel = ViewModelProvider(this).get(AppViewModel::class.java)
             viewModel.setTheme(if (isDarkThemeOn()) Theme.Dark else Theme.Light)
         }
-        setContent { NavigationHost(navHostController = rememberNavController()) }
+        setContent {
+            NavigationHost(
+                navHostController = rememberNavController(),
+                onAppExit = { finish() }
+            )
+        }
     }
 }

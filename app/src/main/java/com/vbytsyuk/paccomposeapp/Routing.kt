@@ -20,7 +20,8 @@ import com.vbytsyuk.paccomposeapp.ui.screens.MainScreen
 @Composable
 fun NavigationHost(
     navHostController: NavHostController,
-    viewModel: AppViewModel = viewModel()
+    viewModel: AppViewModel = viewModel(),
+    onAppExit: () -> Unit
 ) {
     val theme by viewModel.theme.collectAsState()
 
@@ -34,7 +35,8 @@ fun NavigationHost(
                         viewModel,
                         onDetailsClick = { sessionId ->
                             navHostController.navigate(Routes.sessionDetails(sessionId))
-                        }
+                        },
+                        onAppExit = onAppExit
                     )
                 }
 
