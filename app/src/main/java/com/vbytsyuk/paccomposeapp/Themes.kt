@@ -9,9 +9,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
 
-enum class Theme(val colors: Colors) {
-    Light(colors = lightColors()),
+enum class Theme(
+    val colors: Colors,
+) {
+    Light(colors = lightColors(background = Color(0xFFF5F5F5))),
     Dark(colors = darkColors());
+
 
     @SuppressLint("ComposableNaming")
     @Composable
@@ -19,4 +22,9 @@ enum class Theme(val colors: Colors) {
         colors = this.colors,
         content = content
     )
+
+    companion object {
+        @Composable
+        fun typography() = MaterialTheme.typography
+    }
 }

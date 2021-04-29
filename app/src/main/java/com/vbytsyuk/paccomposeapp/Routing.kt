@@ -1,10 +1,14 @@
 package com.vbytsyuk.paccomposeapp
 
+import androidx.compose.animation.*
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Typography
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
@@ -28,23 +32,28 @@ fun NavigationHost(
         ) {
             NavHost(navHostController, startDestination = "main") {
                 composable(route = Routes.MAIN) {
-                    MainScreen(
-                        viewModel,
-                        onDetailsClick = { sessionId ->
-                            navHostController.navigate(Routes.sessionDetails(sessionId))
-                        }
-                    )
+                    EnterAnimation {
+                        MainScreen(
+                            viewModel,
+                            onDetailsClick = { sessionId ->
+                                navHostController.navigate(Routes.sessionDetails(sessionId))
+                            }
+                        )
+                    }
                 }
                 composable(route = Routes.SESSION_DETAILS) { backStackEntry ->
                     val sessions = viewModel.sessions.value
                     val sessionId = backStackEntry.arguments?.getString(Routes.SESSION_ID)
-                    DetailScreen(
-                        viewModel,
-                        session = sessions.find { it.id == sessionId } ?: sessions.random(),
-                        onBackClick = {
-                            navHostController.popBackStack()
-                        }
-                    )
+
+                    EnterAnimation {
+                        DetailScreen(
+                            viewModel,
+                            session = sessions.find { it.id == sessionId } ?: sessions.random(),
+                            onBackClick = {
+                                navHostController.popBackStack()
+                            }
+                        )
+                    }
                 }
             }
         }
@@ -56,4 +65,16 @@ private object Routes {
     const val SESSION_ID = "sessionId"
     val SESSION_DETAILS = sessionDetails(sessionId = "{$SESSION_ID}")
     fun sessionDetails(sessionId: String) = "session_details/$sessionId"
+}
+
+@OptIn(ExperimentalAnimationApi::class)
+@Composable
+private fun EnterAnimation(content: @Composable () -> Unit) {
+    AnimatedVisibility(
+        visible = true,
+        enter = fadeIn(initialAlpha = 0.3f, animationSpec = spring()),
+        exit = fadeOut(),
+        content = content,
+        initiallyVisible = false
+    )
 }

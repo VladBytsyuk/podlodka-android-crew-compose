@@ -1,19 +1,18 @@
 package com.vbytsyuk.paccomposeapp.views
 
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -51,7 +50,7 @@ fun ThemedAppBar(
     }
     Text(
         text = title,
-        style = MaterialTheme.typography.h6,
+        style = Theme.typography().h6,
         maxLines = 1,
         overflow = TextOverflow.Ellipsis,
         modifier = Modifier
@@ -67,16 +66,18 @@ fun ThemedAppBar(
                 onClick = { onThemeChange() }
             )
     ) {
-        Icon(
-            painter = painterResource(
-                id = when (theme) {
-                    Theme.Light -> R.drawable.ic_night
-                    Theme.Dark -> R.drawable.ic_day
-                }
-            ),
-            contentDescription = "Change theme",
-            modifier = Modifier.padding(16.dp)
-        )
+        Crossfade(targetState = theme) { theme ->
+            Icon(
+                painter = painterResource(
+                    id = when (theme) {
+                        Theme.Light -> R.drawable.ic_night
+                        Theme.Dark -> R.drawable.ic_day
+                    }
+                ),
+                contentDescription = "Change theme",
+                modifier = Modifier.padding(16.dp)
+            )
+        }
     }
 }
 

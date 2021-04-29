@@ -1,9 +1,10 @@
 package com.vbytsyuk.paccomposeapp.views
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -14,6 +15,7 @@ import com.vbytsyuk.paccomposeapp.Session
 import com.vbytsyuk.paccomposeapp.Theme
 
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun SessionsList(
     theme: Theme,
@@ -22,14 +24,16 @@ fun SessionsList(
     onSessionClick: (Session) -> Unit,
     onFavoriteClick: (Session, Boolean) -> Unit
 ) = LazyColumn {
-    if (favorites.isNotEmpty()) {
-        item { FavoritesList(theme, favorites, onSessionClick) }
+    item {
+        AnimatedVisibility(favorites.isNotEmpty()) {
+            FavoritesList(theme, favorites, onSessionClick)
+        }
     }
     item {
         Text(
             text = "Сессии",
             color = theme.colors.onBackground,
-            style = MaterialTheme.typography.h6,
+            style = Theme.typography().h6,
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
         )
     }
@@ -40,7 +44,7 @@ fun SessionsList(
                 Text(
                     text = date,
                     color = theme.colors.onBackground,
-                    style = MaterialTheme.typography.body1,
+                    style = Theme.typography().body1,
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
                 )
             }

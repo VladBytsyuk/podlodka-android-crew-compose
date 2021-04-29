@@ -3,7 +3,6 @@ package com.vbytsyuk.paccomposeapp.views
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -33,12 +32,12 @@ fun FavoriteSessionCard(
     ) {
         Text(
             text = session.timeInterval,
-            style = MaterialTheme.typography.h6,
+            style = Theme.typography().h6,
             modifier = Modifier.padding(top = 4.dp)
         )
         Text(
             text = session.date,
-            style = MaterialTheme.typography.body2,
+            style = Theme.typography().body2,
         )
         Text(
             text = session.speaker,
@@ -46,7 +45,7 @@ fun FavoriteSessionCard(
             fontWeight = FontWeight.Bold,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
-            style = MaterialTheme.typography.subtitle2,
+            style = Theme.typography().subtitle2,
             modifier = Modifier.padding(top = 8.dp)
         )
         Text(
@@ -54,7 +53,7 @@ fun FavoriteSessionCard(
             fontSize = 12.sp,
             maxLines = 3,
             overflow = TextOverflow.Ellipsis,
-            style = MaterialTheme.typography.body2,
+            style = Theme.typography().body2,
             modifier = Modifier.padding(bottom = 8.dp)
         )
     }

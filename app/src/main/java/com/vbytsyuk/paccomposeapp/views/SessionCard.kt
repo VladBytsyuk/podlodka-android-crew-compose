@@ -1,17 +1,20 @@
 package com.vbytsyuk.paccomposeapp.views
 
+import android.view.MotionEvent
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -34,7 +37,9 @@ fun SessionCard(
 ) = Card(
     modifier = modifier.clickable { onContentClick() }
 ) {
-    val favoriteIconRippleInteractionSource = remember { MutableInteractionSource() }
+    val favoritePressed = remember { mutableStateOf(false) }
+    val favoriteScale = animateFloatAsState(if (favoritePressed.value) 0.65f else 1f)
+
     Row {
         Image(
             painter = rememberCoilPainter(
@@ -56,39 +61,47 @@ fun SessionCard(
                 text = session.speaker,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
-                style = MaterialTheme.typography.h6,
+                style = Theme.typography().h6,
                 modifier = Modifier.padding(top = 8.dp, bottom = 2.dp)
             )
             Text(
                 text = session.timeInterval,
-                style = MaterialTheme.typography.subtitle2,
+                style = Theme.typography().subtitle2,
             )
             Text(
                 text = session.description,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
-                style = MaterialTheme.typography.body2,
+                style = Theme.typography().body2,
                 modifier = Modifier.padding(top = 4.dp, bottom = 8.dp)
             )
         }
         Box(
             modifier = Modifier
                 .align(Alignment.CenterVertically)
-                .clickable(
-                    interactionSource = favoriteIconRippleInteractionSource,
-                    indication = rememberRipple(radius = 16.dp),
-                    onClick = { onFavoriteClick(!isFavorite) }
-                )
+                .pointerInteropFilter {
+                    when (it.action) {
+                        MotionEvent.ACTION_DOWN -> {
+                            favoritePressed.value = true
+                            onFavoriteClick(!isFavorite)
+                        }
+                        MotionEvent.ACTION_UP -> favoritePressed.value = false
+                    }
+                    true
+                }
         ) {
-            Image(
-                painter = painterResource(
-                    id = if (isFavorite) R.drawable.ic_star_filled else R.drawable.ic_star_contoured
-                ),
-                contentDescription = session.speaker,
-                modifier = Modifier
-                    .size(48.dp)
-                    .padding(8.dp)
-            )
+            Crossfade(targetState = isFavorite) { isFavorite ->
+                Image(
+                    painter = painterResource(
+                        id = if (isFavorite) R.drawable.ic_star_filled else R.drawable.ic_star_contoured
+                    ),
+                    contentDescription = session.speaker,
+                    modifier = Modifier
+                        .scale(favoriteScale.value)
+                        .size(48.dp)
+                        .padding(8.dp)
+                )
+            }
         }
     }
 }
